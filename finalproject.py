@@ -1,11 +1,12 @@
 from flask import Flask
 app = Flask(__name__)
 
-
+# show all restaurants
 @app.route('/')
 @app.route('/restaurants/')
 def show_restaurants():
-    return 'This will show all my Restaurants'
+    # return 'This will show all my Restaurants'
+    return
 
 
 @app.route('/restaurant/new/')
