@@ -14,35 +14,35 @@ session = DBSession()
 
 
 
-# # Fake Restaurants
-# restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
-# restaurants = [
-#     {'name': 'The CRUDdy Crab', 'id': '1'},
-#     {'name': 'Blue Burgers', 'id': '2'},
-#     {'name': 'Taco Hut', 'id': '3'}]
-#
-# # print restaurants[1]
-#
-# # Fake Menu Items
-# items = [
-#     {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'},
-#     {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert',
-#      'id': '2'},
-#     {'name': 'Caesar Salad', 'description': 'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree',
-#      'id': '3'},
-#     {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'},
-#     {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer',
-#      'id': '5'}]
-#
-# # stores courses in the menu
-# courses = []
-# for i in items:
-#     if i['course'] not in courses:
-#         courses.append(i['course'])
-# courses.sort()
-# # print courses
-#
-# item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree'}
+# Fake Restaurants
+restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
+restaurants = [
+    {'name': 'The CRUDdy Crab', 'id': '1'},
+    {'name': 'Blue Burgers', 'id': '2'},
+    {'name': 'Taco Hut', 'id': '3'}]
+
+# print restaurants[1]
+
+# Fake Menu Items
+items = [
+    {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'},
+    {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert',
+     'id': '2'},
+    {'name': 'Caesar Salad', 'description': 'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree',
+     'id': '3'},
+    {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'},
+    {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer',
+     'id': '5'}]
+
+# stores courses in the menu
+courses = []
+for i in items:
+    if i['course'] not in courses:
+        courses.append(i['course'])
+courses.sort()
+# print courses
+
+item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree'}
 
 
 # show all restaurants
@@ -93,22 +93,16 @@ def delete_restaurant(restaurant_id):
 
 
 @app.route('/restaurant/<int:restaurant_id>/')
-@app.route('/restaurant/<int:restaurant_id>/menu/')
+@app.route('/restaurant/<int:restaurant_id>/menu/',methods=['POST','GET'])
 def show_menu(restaurant_id):
     # return 'This page is the menu for restaurant %s' % restaurant_id
-    res = {}
-    for hotel in restaurants:
-        if int(hotel['id']) == restaurant_id:
-            res = hotel
-    if restaurant_id == 1:
-        i = items
-        c = courses
-    else:
-        i = []
-        c = []
-        flash('sorry for inconvienence, new restaurant')
-    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=res, items=i,
-                           courses=c)
+    restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
+    menu = session.query(MenuItem).filter_by(restaurant_id=restaurant_id).all()
+    courses = session.query(MenuItem.course).distinct()
+    if len(menu) == 0:
+        flash(" The Restaurant will Open Soon, Sorry For inconvenience")
+    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=restaurant, items=menu,
+                           courses=courses)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new')

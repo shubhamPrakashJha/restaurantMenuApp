@@ -8,28 +8,28 @@
 <h1>{{ restaurant.name }}</h1>
 
 {% with messages = get_flashed_messages() %}
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li><strong>{{ message }}</strong></li>
-        {% endfor %}
-    </ul>
-{% endif %}
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endwith %}
 
 <p><a href="#">Create New Item</a></p>
 
 
 {% for course in courses %}
-    <h1>{{ course }}</h1>
+    <h1>{{ course.course }}</h1>
     {% for i in items %}
-        {% if i.course == course %}
+        {% if i.course == course.course %}
             <p>
                 <b>{{ i.name }}</b><br>
                 <i>{{ i.description }}</i><br>
                 {{ i.price }}<br>
-                <a href="#">Edit</a><br>
-                <a href="#">Delete</a>
+                <a href="{{ url_for('edit_menu_item', restaurant_id=i.restaurant_id, menu_id=i.id) }}">Edit</a><br>
+                <a href="{{ url_for('delete_menu_item', restaurant_id=i.restaurant_id, menu_id=i.id) }}">Delete</a>
             </p>
         {% endif %}
     {% endfor %}
