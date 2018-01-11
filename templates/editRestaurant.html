@@ -4,8 +4,8 @@
 
 </head>
 <body>
-<h1>Enter the new name of Restaurant.</h1>
-<form action="#" method="post">
+<h1>Enter new name for {{ restaurant.name }}.</h1>
+<form action="{{ url_for('edit_restaurant', restaurant_id=restaurant_id) }}" method="post">
     <input type="text" name="name">
     <input type="Submit" value="Edit">
     <a href="{{ url_for('show_restaurants') }}">cancel</a>
