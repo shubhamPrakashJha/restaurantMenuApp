@@ -50,6 +50,7 @@ session = DBSession()
 @app.route('/restaurants/')
 def show_restaurants():
     # return 'This will show all my Restaurants'
+    restaurants = session.query(Restaurant).all()
     return render_template('restaurants.html', restaurants=restaurants)
 
 
