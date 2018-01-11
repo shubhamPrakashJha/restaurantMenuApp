@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, flash, url_for
 
 app = Flask(__name__)
 
@@ -8,6 +8,8 @@ restaurants = [
     {'name': 'The CRUDdy Crab', 'id': '1'},
     {'name': 'Blue Burgers', 'id': '2'},
     {'name': 'Taco Hut', 'id': '3'}]
+
+# print restaurants[1]
 
 # Fake Menu Items
 items = [
@@ -26,7 +28,7 @@ for i in items:
     if i['course'] not in courses:
         courses.append(i['course'])
 courses.sort()
-print courses
+# print courses
 
 item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree'}
 
@@ -54,15 +56,29 @@ def edit_restaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/delete/')
 def delete_restaurant(restaurant_id):
     # return 'This page will be for deleting restaurant %s' % restaurant_id
-    return render_template('deleteRestaurant.html', restaurant_id=restaurant_id)
+    for hotel in restaurants:
+        if int(hotel['id']) == restaurant_id:
+            res = hotel
+    return render_template('deleteRestaurant.html', restaurant_id=restaurant_id, restaurant=res)
 
 
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def show_menu(restaurant_id):
     # return 'This page is the menu for restaurant %s' % restaurant_id
-    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=restaurant, items=items,
-                           courses=courses)
+    res = {}
+    for hotel in restaurants:
+        if int(hotel['id']) == restaurant_id:
+            res = hotel
+    if restaurant_id == 1:
+        i = items
+        c = courses
+    else:
+        i = []
+        c = []
+        flash('sorry for inconvienence, new restaurant')
+    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=res, items=i,
+                           courses=c)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new')
@@ -81,5 +97,6 @@ def delete_menu_item(restaurant_id, menu_id):
 
 
 if __name__ == '__main__':
+    app.secret_key = 'super secret key'
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
