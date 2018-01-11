@@ -7,13 +7,13 @@
 <h1>Edit Menu Item</h1>
 <form action="#" method="post">
     <p>Name</p>
-    <input type="text" name="name">
+    <input type="text" name="name" placeholder="{{ item.name }}">
 
     <p>Description</p>
-    <input type="" name="description">
+    <textarea name="description" rows="6" cols="40"   placeholder="{{ item.description }}"></textarea>
 
     <p>Price</p>
-    <input type="textarea" name="description">
+    <input type="text" name="price" placeholder="{{ item.price }}">
 
     <p>Course</p>
     {% if item.course == 'Appetizer' %}
