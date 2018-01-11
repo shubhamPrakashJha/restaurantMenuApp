@@ -20,6 +20,7 @@ items = [
     {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer',
      'id': '5'}]
 
+# stores courses in the menu
 courses = []
 for i in items:
     if i['course'] not in courses:
@@ -60,12 +61,13 @@ def delete_restaurant(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def show_menu(restaurant_id):
     # return 'This page is the menu for restaurant %s' % restaurant_id
-    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=restaurant, items=items, courses=courses)
+    return render_template('menu.html', restaurant_id=restaurant_id, restaurant=restaurant, items=items,
+                           courses=courses)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new')
 def new_menu_item(restaurant_id):
-    return render_template('newMenuItem.html',restaurant_id=restaurant_id)
+    return render_template('newMenuItem.html', restaurant_id=restaurant_id)
 
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit')
