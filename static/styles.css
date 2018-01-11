@@ -1,0 +1,100 @@
+body {
+    font-family: sans-serif;
+    background-image: url("/static/background.jpg")
+}
+
+h1, h2, h4 {
+    color: #e4abb3;
+}
+
+h1, h2 {
+    font-family: 'Georgia', serif;
+    margin: 0;
+}
+
+h1 {
+    border-bottom: 3px solid #b82820;
+}
+
+h2 {
+    font-size: 1.2em;
+    border-bottom: 2px solid #b82820;
+    padding: 5px 0px;
+}
+
+h3{
+    color: #e88982;
+    margin-bottom: 5px;
+}
+
+p {
+    color: #eca7a2;
+    margin-bottom: 2px;
+}
+
+a {
+    text-decoration: none;
+    color: #FFFFCC;
+    /* font-size: .75em; */
+}
+
+.pane {
+    background-color: #3e1313db;
+    position: absolute;
+    /* display: flex; */
+    /* padding-left: initial; */
+    left: 30%;
+    border: 2px solid;
+    border-radius: 25px;
+    padding: 20px;
+    /* margin: auto; */
+    /* margin-right: auto; */
+    border-color: #fad5cd;
+    width: 40%;
+    min-width: 40%;
+    min-height: 100%;
+    box-shadow: -12px 20px 20px 0px black;
+}
+
+.header {
+    left: 50%;
+    text-align: center;
+    color: #333;
+}
+
+.name {
+    width: 50%;
+    display: inline-block;
+    float: left;
+    color: #ffffcc;
+}
+
+.description {
+    font-style: italic;
+    font-family: serif;
+}
+
+.price {
+    text-align: right;
+    width: 50%;
+    float: right;
+    color: #f5f4c3;
+}
+
+.editdeletepane {
+    font-size: 0.75em;
+}
+
+.flash {
+    background: #cee5F5;
+}
+
+.error {
+    background: #f0d6d6;
+    padding: 0.5em;
+}
+
+
+form {
+    margin-top: 16px;
+}
