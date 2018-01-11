@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
 </head>
 <body>
+
+<h1>{{restaurant.name}}</h1>
+<p><a href="#">Create New Item</a></p>
+
+
+{% for course in courses %}
+<h1>{{course}}</h1>
+{% for i in items %}
+{% if i.course == course %}
+<p>
+    <b>{{i.name}}</b><br>
+    <i>{{i.description}}</i><br>
+    {{i.price}}<br>
+    <a href="#">Edit</a><br>
+    <a href="#">Delete</a>
+</p>
+{% endif %}
+{% endfor %}
+{% endfor %}
 
 </body>
 </html>

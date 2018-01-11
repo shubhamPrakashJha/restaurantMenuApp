@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+
 </head>
 <body>
-
+    <h1>Enter the name of Restaurant.</h1>
+    <form action="#" method="post">
+        <input type="text"name="name">
+        <input type="Submit" value="Create">
+        <a href="{{url_for('show_restaurants')}}">cancel</a>
+    </form>
 </body>
 </html>
