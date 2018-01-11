@@ -22,9 +22,10 @@ class Restaurant(Base):
     @property
     def serialize(self):
         return {
-            'name' : self.name,
-            'id' : self.id,
+            'name': self.name,
+            'id': self.id,
         }
+
 
 class MenuItem(Base):
     # --------Table info----------
@@ -43,12 +44,13 @@ class MenuItem(Base):
     def serialize(self):
         # Returns object data in easily serializeable format
         return {
-            'name' : self.name,
-            'description' : self.description,
-            'id' : self.price,
-            'price' : self.price,
-            'course' : self.course,
+            'name': self.name,
+            'description': self.description,
+            'id': self.price,
+            'price': self.price,
+            'course': self.course,
         }
+
 
 # __________configuration End of File______________________
 
