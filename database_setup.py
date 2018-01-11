@@ -19,6 +19,12 @@ class Restaurant(Base):
     name = Column(String(250), nullable=False)
     id = Column(Integer, primary_key=True)
 
+    @property
+    def serialize(self):
+        return {
+            'name' : self.name,
+            'id' : self.id,
+        }
 
 class MenuItem(Base):
     # --------Table info----------
@@ -33,6 +39,16 @@ class MenuItem(Base):
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
     restaurant = relationship(Restaurant)
 
+    @property
+    def serialize(self):
+        # Returns object data in easily serializeable format
+        return {
+            'name' : self.name,
+            'description' : self.description,
+            'id' : self.price,
+            'price' : self.price,
+            'course' : self.course,
+        }
 
 # __________configuration End of File______________________
 
