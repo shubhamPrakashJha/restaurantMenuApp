@@ -1,36 +1,48 @@
-from flask import Flask, render_template, flash, url_for
+from flask import Flask, render_template, flash, url_for, redirect, request
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from database_setup import Base, Restaurant, MenuItem
 
 app = Flask(__name__)
 
-# Fake Restaurants
-restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
-restaurants = [
-    {'name': 'The CRUDdy Crab', 'id': '1'},
-    {'name': 'Blue Burgers', 'id': '2'},
-    {'name': 'Taco Hut', 'id': '3'}]
+engine = create_engine('sqlite:///restaurantmenu.db')
+Base.metadata.bind =  engine
 
-# print restaurants[1]
+DBSession  = sessionmaker(bind=engine)
+session = DBSession()
 
-# Fake Menu Items
-items = [
-    {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'},
-    {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert',
-     'id': '2'},
-    {'name': 'Caesar Salad', 'description': 'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree',
-     'id': '3'},
-    {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'},
-    {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer',
-     'id': '5'}]
 
-# stores courses in the menu
-courses = []
-for i in items:
-    if i['course'] not in courses:
-        courses.append(i['course'])
-courses.sort()
-# print courses
 
-item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree'}
+# # Fake Restaurants
+# restaurant = {'name': 'The CRUDdy Crab', 'id': '1'}
+# restaurants = [
+#     {'name': 'The CRUDdy Crab', 'id': '1'},
+#     {'name': 'Blue Burgers', 'id': '2'},
+#     {'name': 'Taco Hut', 'id': '3'}]
+#
+# # print restaurants[1]
+#
+# # Fake Menu Items
+# items = [
+#     {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree', 'id': '1'},
+#     {'name': 'Chocolate Cake', 'description': 'made with Dutch Chocolate', 'price': '$3.99', 'course': 'Dessert',
+#      'id': '2'},
+#     {'name': 'Caesar Salad', 'description': 'with fresh organic vegetables', 'price': '$5.99', 'course': 'Entree',
+#      'id': '3'},
+#     {'name': 'Iced Tea', 'description': 'with lemon', 'price': '$.99', 'course': 'Beverage', 'id': '4'},
+#     {'name': 'Spinach Dip', 'description': 'creamy dip with fresh spinach', 'price': '$1.99', 'course': 'Appetizer',
+#      'id': '5'}]
+#
+# # stores courses in the menu
+# courses = []
+# for i in items:
+#     if i['course'] not in courses:
+#         courses.append(i['course'])
+# courses.sort()
+# # print courses
+#
+# item = {'name': 'Cheese Pizza', 'description': 'made with fresh cheese', 'price': '$5.99', 'course': 'Entree'}
 
 
 # show all restaurants
@@ -44,7 +56,7 @@ def show_restaurants():
 @app.route('/restaurant/new/')
 def new_restaurant():
     # return 'This will create a new Restaurant'
-    return render_template('newRestaurant.html', restaurants=restaurants)
+    return render_template('newRestaurant.html')
 
 
 @app.route('/restaurant/<int:restaurant_id>/edit/')
